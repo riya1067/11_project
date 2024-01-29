@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}<!--part of this code will be in layout.html-->
+{% block content %}<!--section of code that can be extended by layout.html-->
+<div class="content-section">
+    <form method="POST" action=""><!--form will be submitted to the same url it originated from-->
+        {{form.hidden_tag()}}<!--flask security feature to protect against cross site request forgery attacks-->
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">New Entry</legend>
+            <div class="form-group"><!--displays labels,form fields and errors messages of the category field-->
+                {{form.category.label(class="form-control-label")}}
+                {% if form.category.errors %}
+                    {{ form.category(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.category.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.category(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+            <div class="form-group"><!--handles the content field of the form-->
+                {{form.content.label(class="form-control-label")}}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.content(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+            <div class="form-group"><!--handles the amount field of the form-->
+                {{form.amount.label(class="form-control-label")}}
+                {% if form.amount.errors %}
+                    {{ form.amount(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.amount.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.amount(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{form.submit(class="btn btn-outline-info")}}<!--handles the submit button-->
+        </div>
+    </form>
+</div>    
+{% endblock content %}<!--ends the content block-->

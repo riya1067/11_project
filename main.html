@@ -1,0 +1,29 @@
+{% extends "layout.html" %} <!--this template extends layout.html,content of this template will be inserted in layout.html-->
+{% block content %}<!--starts a block named content(blocks define the code in a template that can be extended in another template)-->
+    <div class="row">
+        <div class="col-md-8">
+            {% with messages=get_flashed_messages(with_categories=true) %}
+               <!--handles temporary messages,doesnt render content only gets flash messages-->
+            {% endwith %}
+            {% if category_query %} <!--if category_query exists and is not empty-->
+                <h3>Search Results for Category: {{ category_query }}</h3> <!--display heading relating to the category-->
+            {% endif %}
+            {% for entry in entries %}
+                {% if not category_query or entry.category == category_query %}
+                <!--checks if there is not category_query or if the entry's category matches the query,
+                makes it to handle the cases where there are no entries with a category and when there are entries-->
+                    <article class="media content-section"> <!--code displays all data-->
+                        <div class="media-body">
+                            <div class="article-metadata">
+                                <h2>{{ entry.category }}</h2>
+                                <small class="text-muted">{{ entry.date_added.strftime('%Y-%m-%d') }}</small
+                            </div>
+                            <p class="article-title">{{ entry.content }}</p>
+                            <p class="article-content">{{ entry.amount }}</p>
+                        </div>
+                    </article>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
